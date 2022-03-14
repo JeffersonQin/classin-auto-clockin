@@ -40,6 +40,14 @@ Options:
 * `hwnd`: ClassIn 窗体句柄。关于获取句柄在文后会详述。
 * `delay`: 检测间隔时间
 
+## Requirements
+
+* python 3.6+
+* click
+* pywin32
+* pillow
+* opencv-python
+
 ## 获取窗体句柄
 
 日后可能会写自动获取句柄，但是到底写不写就两说了，~~毕竟能用就行~~。
