@@ -1,3 +1,9 @@
+# test files
+test.out
+
+# screenshot
+screenshot.bmp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
