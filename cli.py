@@ -11,17 +11,25 @@ from PIL import ImageGrab
 window_title = 'ClassIn'
 window_class = 'Qt5151QWindowIcon'
 window_exe = 'ClassIn.exe'
+g_hwnd = None
 
 # TODO: 以后写 win32api 自动检测
 dpi_scale = 1
 bmpfilenamename = "screenshot.bmp"
 green = (81, 255, 146)
 
+def enum_callback(hwnd, params):
+	if (win32gui.GetWindowText(hwnd) != window_title): return
+	if (win32gui.GetClassName(hwnd) != window_class): return
+	rect = win32gui.GetWindowRect(hwnd)
+	if rect[0] < 0 and rect[1] < 0 and rect[2] < 0 and rect[3] < 0:
+		global g_hwnd
+		g_hwnd = hwnd
+
 
 def capture_screen(hwnd):
-	if (hwnd == None):
-		hwnd = win32gui.FindWindow(window_class, window_title)
-		# TODO: 以后写筛选
+	# show window
+	win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
 	# get window position
 	rect = win32gui.GetWindowRect(hwnd)
 	x = rect[0]
@@ -69,6 +77,10 @@ def start_daemon(delay: int, hwnd: int):
 	'''
 	start daemon
 	'''
+	if (hwnd == None):
+		win32gui.EnumWindows(enum_callback, None)
+		hwnd = g_hwnd
+
 	while True:
 		x, y, w, h = capture_screen(hwnd)
 
